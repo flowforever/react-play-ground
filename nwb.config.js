@@ -1,3 +1,7 @@
+
 module.exports = {
-  type: 'react-app'
-}
+    type: 'react-app',
+    devServer: {
+        port: 7001
+    }
+};

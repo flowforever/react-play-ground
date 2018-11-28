@@ -3,7 +3,7 @@ import {storiesOf} from '@storybook/react';
 import {BookNames} from "../helper/constants";
 import {getCaseName} from "../helper/index";
 
-const addStory = (name, fn, info) => storiesOf(BookNames.Hooks, module, {info}).add(name, fn, {info});
+const addStory = (fn, info) => storiesOf(BookNames.Hooks, module, {info}).add(getCaseName(__filename), fn, {info});
 
 function UseEffectDemoComponent() {
     useEffect(() => {
@@ -32,4 +32,4 @@ function BasicUsage() {
     );
 }
 
-addStory(getCaseName(__filename), () => (<BasicUsage/>), {});
+addStory(() => (<BasicUsage/>), {});

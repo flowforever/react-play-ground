@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {storiesOf} from '@storybook/react';
-import {getBookName, getCaseName} from "../helper/index";
+import {createAddStory} from "../helper/index";
 
-const addStory = (fn, info) => storiesOf(getBookName(__filename), module, {info}).add(getCaseName(__filename), fn, {info});
+const addStory = createAddStory(__filename);
 
 function UseEffectDemoComponent() {
     useEffect(() => {

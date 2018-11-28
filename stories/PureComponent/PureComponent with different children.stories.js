@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {storiesOf} from '@storybook/react';
-import {getBookName, getCaseName} from "../helper";
+import {createAddStory} from "../helper";
 
-const addStory = (fn, info) => storiesOf(getBookName(__filename), module, {info}).add(getCaseName(__filename), fn, {info});
+const addStory = createAddStory(__filename);
+
 class PureComponentWrapper extends React.PureComponent {
 
     static propTypes = {
@@ -63,5 +63,5 @@ class Div extends React.PureComponent {
     }
 }
 
-addStory(getCaseName(__filename), () => <PureComponentWrapper/>);
+addStory(() => <PureComponentWrapper/>);
 

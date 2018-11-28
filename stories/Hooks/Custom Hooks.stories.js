@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {createAddStory} from "../helper/index";
 import {StoryWrapper} from "../helper/StoryWrapper";
 import {itemMargins, itemPaddings} from "../helper/styles";
@@ -13,7 +13,7 @@ const fetchListFromFakeAPI = (groupId) => new Promise(resolve => {
     setTimeout(() => resolve(
         [
             createItem({name: 'trump wang', id: 1}),
-            createItem({name: 'ronnie o\'sullivan', id: 1}),
+            createItem({name: 'ronnie o\'sullivan', id: 2}),
         ]
     ), 500);
 });
@@ -33,22 +33,42 @@ const useUserList = (groupId) => {
 };
 
 function UserList({groupId}) {
-    const [userList] = useUserList(groupId);
+
+    const [userList, setUserList] = useUserList(groupId);
+
+    const onUpdateUserName = useCallback((userUpdate) => {
+
+        const newList = userList.map(u => {
+            if (u.id === userUpdate.id) {
+                return {...userUpdate};
+            }
+            return {...u};
+        });
+
+        setUserList(newList);
+    }, userList.map(o=> o.id));
 
     return (
         <div>
-            {userList.map(user => <UserItem key={`${user.id}-${user.name}`} {...user} />)}
+            {userList.map(user => (
+                <UserItem
+                    key={`${user.id}-${user.name}`}
+                    {...user}
+                    onUpdateUser={onUpdateUserName}
+                />))}
         </div>
     );
 }
 
 class UserItem extends React.PureComponent {
     render() {
-        const {id, name} = this.props;
+        const {id, name, onUpdateUser} = this.props;
 
         return (
             <div style={{...itemMargins, ...itemPaddings}}>
-                {id} - {name}
+                {id} - {name} - <input value={name} onChange={({target: {value}}) => {
+                onUpdateUser({id, name: value})
+            }}/>
             </div>
         );
     }

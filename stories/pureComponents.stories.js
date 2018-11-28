@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {createAddStory} from "./helper";
+import {storiesOf} from '@storybook/react';
+import {action} from '@storybook/addon-actions';
 
-const addStory = createAddStory('PureComponent');
+const FolderName = 'PureComponent';
+const addStory = (name, fn, info) => storiesOf(FolderName, module, {info}).add(name, fn, {info});
 
 class PureComponentWrapper extends React.PureComponent {
 
@@ -25,7 +27,7 @@ class PureComponentWrapper extends React.PureComponent {
                 <br/>
 
                 <Div text="I should not being reRendered">
-                    Simple Div Content
+                    I only render one time
                 </Div>
 
                 <br/>
@@ -33,7 +35,7 @@ class PureComponentWrapper extends React.PureComponent {
                     <div>A native div Component</div>
                 </Div>
                 <br/>
-                <FunctionDiv>
+                <FunctionDiv text="I am always being rendered">
                     I am simple FunctionDiv
                 </FunctionDiv>
             </div>
@@ -63,6 +65,5 @@ class Div extends React.PureComponent {
     }
 }
 
-addStory('native div children', () => <PureComponentWrapper/>);
-addStory('Div PureComponent children', () => <PureComponentWrapper/>);
+addStory('PureComponent with different children', () => <PureComponentWrapper/>);
 
